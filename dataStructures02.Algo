@@ -1,0 +1,56 @@
+ALGORITHM sumSistEl
+VAR
+    distEl : INTEGER :=0;
+    i, j : INTEGER :=0;
+BEGIN
+    READ(Set1);
+    READ(Set2);
+    FOR i FROM 0 TO Set2.length STEP 1  DO
+        FOR j FROM 0 TO Set1.length STEP 1  DO
+            IF (Set2[i]<>Set1[j]) THEN
+                Break;
+            END_IF
+        END_FOR
+        distEl = distEl + Set2[i];
+    END_FOR
+    i, j := 0;
+    FOR i FROM 0 TO Set1.length STEP 1  DO
+        FOR j FROM 0 TO Set2.length STEP 1  DO
+            IF (Set1[i]<>Set2[j]) THEN
+                Break;
+            END_IF
+        END_FOR
+        distEl = distEl + Set1[i];
+    END_FOR
+    Write(distEl);
+END
+
+ALGORITHM sumSistEl
+VAR
+    count : INTEGER :=0;
+    i, j : INTEGER :=0;
+    htab : HASH_TABLE<INTEGER,INTEGER>;
+    Tab : ARRAY_OF INTEGER[50];
+BEGIN
+    READ(Set1);
+    READ(Set2);
+    Tab = Merge(Set1,Set2)//to reduce the number of loops for;
+    FOR i FROM 0 TO Tab[i-1] STEP 1  DO
+        count:=0;
+        FOR j FROM i+1 TO Tab[j-1] STEP 1  DO
+            IF (Tab[i]=Tab[j]]) THEN
+                count++;
+            END_IF
+        END_FOR
+        htab.insert(Tab[i],count);
+    END_FOR
+    count:=0;
+    FOR i FROM 0 TO htab.length STEP 1 DO
+        IF (htab.get(i)<>1) THEN
+            count = count+htab.get(i);
+        END_IF
+    END_FOR
+    Write(count);
+END
+
+
